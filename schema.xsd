@@ -29,7 +29,7 @@
 			<element name="group" type="tns:DeviceGroup" minOccurs="0"
 				maxOccurs="1">
 			</element>
-			<element name="prameters" type="tns:Paramters" minOccurs="1"
+			<element name="parameters" type="tns:Paramters" minOccurs="1"
 				maxOccurs="1">
 			</element>
 		</sequence>

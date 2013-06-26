@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.example.org/schema ./schema.xsd">
 	
     <device type="CPU">
-        <name>Intel Core i3 3240</name>
+        <name>Core i3 3240</name>
         <origin>USA</origin>
         <manufacturer>Intel</manufacturer>
         <price>12350</price>
@@ -19,7 +19,7 @@
     </device>
     
     <device type="RAM">
-        <name>PC10600 Transcend</name>
+        <name>PC10600</name>
         <origin>USA</origin>
         <manufacturer>Transcend</manufacturer>
         <price>11740</price>
