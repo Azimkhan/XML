@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.entity;
+package com.epam.azimkhan.devices.entity.core;
 
 /**
  * Basic device
@@ -29,9 +29,14 @@ public abstract class Device {
 	 */
 	private int price;
 	
+	/**
+	 * Is critical
+	 */
+	private boolean critical;
+	
 	public Device(){}
 	
-	public Device(String name, String manufacturer, String origin, int price, double powerConsumption) {
+	public Device(String name, String manufacturer, String origin, int price, double powerConsumption, boolean critical) {
 		super();
 		this.name = name;
 		this.manufacturer = manufacturer;
@@ -109,5 +114,21 @@ public abstract class Device {
 	public void setPowerConsumption(double powerConsumption) {
 		this.powerConsumption = powerConsumption;
 	}
+
+	/**
+	 * @return the critical
+	 */
+	public boolean isCritical() {
+		return critical;
+	}
+
+	/**
+	 * @param critical the critical to set
+	 */
+	public void setCritical(boolean critical) {
+		this.critical = critical;
+	}
+	
+	
 
 }

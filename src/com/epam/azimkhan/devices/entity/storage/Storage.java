@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.entity;
+package com.epam.azimkhan.devices.entity.storage;
 
 public interface Storage {
 	

@@ -1,4 +1,6 @@
-package com.epam.azimkhan.devices.entity;
+package com.epam.azimkhan.devices.entity.core;
+
+import com.epam.azimkhan.devices.entity.storage.Storage;
 
 public class InternalStorage extends Device implements Storage{
 	
@@ -27,8 +29,8 @@ public class InternalStorage extends Device implements Storage{
 
 	public InternalStorage(String name, String manufacturer, String origin,
 			int price, double powerConsumption, int capacity,
-			int dataTransferRate, DiskType type) {
-		super(name, manufacturer, origin, price, powerConsumption);
+			int dataTransferRate, DiskType type, boolean critical) {
+		super(name, manufacturer, origin, price, powerConsumption, critical);
 		this.capacity = capacity;
 		this.dataTransferRate = dataTransferRate;
 		this.type = type;

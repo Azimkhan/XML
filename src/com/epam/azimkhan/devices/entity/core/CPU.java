@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.entity;
+package com.epam.azimkhan.devices.entity.core;
 
 import java.io.Serializable;
 
@@ -47,8 +47,8 @@ public class CPU extends Device implements Cloneable, Serializable{
 
 	public CPU(String name, String manufacturer, String origin, int price,
 			double powerConsumption, int frequency, int numberOfCores,
-			int numberOfThreads, int cacheSize, CPUSocket socket) {
-		super(name, manufacturer, origin, price, powerConsumption);
+			int numberOfThreads, int cacheSize, CPUSocket socket, boolean critical) {
+		super(name, manufacturer, origin, price, powerConsumption, critical);
 		this.frequency = frequency;
 		this.numberOfCores = numberOfCores;
 		this.numberOfThreads = numberOfThreads;

@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<airlines xmlns="http://azimkhan.net/Airlines" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://azimkhan.net ./schema.xsd" >
+<devices xmlns="http://www.example.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/schema ./schema.xsd">
 	
-    <airline name="Astana-Minsk_001">
-        <airplane model="AIRBUS A320">
-            <type>NARROW_BODY</type> 
-            <departure>
-                <date>2013-12-22</date>
-                <time>13:40:00</time>
-            </departure>
-        </airplane>
-       	
-    </airline>
+    <device type="CPU">
+        <name>Intel Core i3 3240</name>
+        <origin>USA</origin>
+        <manufacturer>Intel</manufacturer>
+        <price>12350</price>
+        <critical>true</critical>
+        <parameters>
+            <parameter name="frequency">3400</parameter>
+            <parameter name="number_of_cores">2</parameter>
+            <parameter name="number_of_threads">4</parameter>
+            <parameter name="socket">LGA1155</parameter>
+        </parameters>
+        
+    </device>
     
-</airlines>
+    <device type="RAM">
+        <name>PC10600 Transcend</name>
+        <origin>USA</origin>
+        <manufacturer>Transcend</manufacturer>
+        <price>11740</price>
+        <critical>true</critical>
+        <parameters>
+            <parameter name="frequency">1333</parameter>
+            <parameter name="memory_size">8192</parameter>
+            <parameter name="type">DDR3</parameter>
+        </parameters>
+        
+    </device>
+    
+</devices>

@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.entity;
+package com.epam.azimkhan.devices.entity.core;
 
 import java.io.Serializable;
 
@@ -39,8 +39,8 @@ public class RandomAccessMemory extends Device implements Cloneable, Serializabl
 
 	public RandomAccessMemory(String name, String manufacturer, String origin,
 			int price, double powerConsumption, int memorySize, int frequency,
-			RAMType type) {
-		super(name, manufacturer, origin, price, powerConsumption);
+			RAMType type, boolean critical) {
+		super(name, manufacturer, origin, price, powerConsumption, critical);
 		this.memorySize = memorySize;
 		this.frequency = frequency;
 		this.type = type;

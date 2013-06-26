@@ -1,61 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://azimkhan.net/Airlines" xmlns:tns="http://azimkhan.net/Airlines" elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/schema" xmlns:tns="http://www.example.org/schema" elementFormDefault="qualified">
 
-	<element name="ailines">
+	<element name="devices">
 		<complexType>
 			<sequence>
-				<element name="airline" type="tns:Airline" minOccurs="1" maxOccurs="unbounded"></element>
+				<element name="device" type="tns:Device"  minOccurs="1" maxOccurs="unbounded"></element>
 			</sequence>
 		</complexType>
 	</element>
-
-	<complexType name="Airline">
-		
+	
+	<complexType name="Device">
 		<sequence>
-			<element name="airplane" type="tns:Airplane"></element>
-			<element name="arrival" type="tns:Point"></element>
-			<element name="departure" type="tns:Point"></element>
+			<element name="name" type="string" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			<element name="origin" type="string" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			<element name="manufacturer" type="string" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			<element name="price" type="integer" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			<element name="critical" type="boolean" minOccurs="1"
+				maxOccurs="1">
+			</element>
+			<element name="group" type="tns:DeviceGroup" minOccurs="0"
+				maxOccurs="1">
+			</element>
+			<element name="prameters" type="tns:Paramters" minOccurs="1"
+				maxOccurs="1">
+			</element>
 		</sequence>
-		<attribute name="name" type="string"></attribute>
-	</complexType>
-	
-    <complexType name="Airplane">
-    	<sequence>
-    		<element name="type" type="tns:BodyType"></element>
-    	</sequence>
-    	<attribute name="model" type="string"></attribute>
 
-    </complexType>
-
-
-    <complexType name="Point">
-		<sequence>
-			<element name="location" type="tns:Location"></element>
-			<element name="date" type="tns:Date"></element>
-			<element name="time" type="tns:Time"></element>
-		</sequence>
+		<attribute name="type" type="tns:DeviceType" use="required"></attribute>
 	</complexType>
-	
-	
-	<complexType name="Location">
-		<sequence>
-			<element name="Country" type="string"></element>
-			<element name="City" type="string"></element>
-		</sequence>
-	</complexType>
-	
-    <simpleType name="BodyType">
+
+	<simpleType name="DeviceGroup">
 		<restriction base="string">
-			<enumeration value="NARROW_BODY"></enumeration>
-    		<enumeration value="WIDE_BODY"></enumeration>
+			<enumeration value="Multimedia"></enumeration>
+			<enumeration value="Input"></enumeration>
+			<enumeration value="Output"></enumeration>
 		</restriction>
+	</simpleType>
+
+	<complexType name="Paramters">
+		<sequence>
+			<element name="parameter" type="tns:Parameter" minOccurs="1" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+	
+		
+    <simpleType name="DeviceType">
+    	<restriction base="string">
+    		<enumeration value="PERIPHERAL"></enumeration>
+    		<enumeration value="INTERNAL_STORAGE"></enumeration>
+    		<enumeration value="RAM"></enumeration>
+    		<enumeration value="CPU"></enumeration>
+    	</restriction>
     </simpleType>
     
-    <simpleType name="Date">
-    	<restriction base="date"></restriction>
-    </simpleType>
 
-    <simpleType name="Time">
-    	<restriction base="time"></restriction>
-    </simpleType>
+
+
+    <complexType name="Parameter">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute name="name" type="string"></attribute>
+    		</extension>
+    		
+    	</simpleContent>
+    </complexType>
 </schema>
