@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<airlines xmlns="http://azimkhan.net/Airlines" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://azimkhan.net ./schema.xsd" >
+	
+    <airline name="Astana-Minsk_001">
+        <airplane model="AIRBUS A320">
+            <type>NARROW_BODY</type> 
+            <departure>
+                <date>2013-12-22</date>
+                <time>13:40:00</time>
+            </departure>
+        </airplane>
+       	
+    </airline>
+    
+</airlines>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://azimkhan.net/Airlines" xmlns:tns="http://azimkhan.net/Airlines" elementFormDefault="qualified">
+
+	<element name="ailines">
+		<complexType>
+			<sequence>
+				<element name="airline" type="tns:Airline" minOccurs="1" maxOccurs="unbounded"></element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="Airline">
+		
+		<sequence>
+			<element name="airplane" type="tns:Airplane"></element>
+			<element name="arrival" type="tns:Point"></element>
+			<element name="departure" type="tns:Point"></element>
+		</sequence>
+		<attribute name="name" type="string"></attribute>
+	</complexType>
+	
+    <complexType name="Airplane">
+    	<sequence>
+    		<element name="type" type="tns:BodyType"></element>
+    	</sequence>
+    	<attribute name="model" type="string"></attribute>
+
+    </complexType>
+
+
+    <complexType name="Point">
+		<sequence>
+			<element name="location" type="tns:Location"></element>
+			<element name="date" type="tns:Date"></element>
+			<element name="time" type="tns:Time"></element>
+		</sequence>
+	</complexType>
+	
+	
+	<complexType name="Location">
+		<sequence>
+			<element name="Country" type="string"></element>
+			<element name="City" type="string"></element>
+		</sequence>
+	</complexType>
+	
+    <simpleType name="BodyType">
+		<restriction base="string">
+			<enumeration value="NARROW_BODY"></enumeration>
+    		<enumeration value="WIDE_BODY"></enumeration>
+		</restriction>
+    </simpleType>
+    
+    <simpleType name="Date">
+    	<restriction base="date"></restriction>
+    </simpleType>
+
+    <simpleType name="Time">
+    	<restriction base="time"></restriction>
+    </simpleType>
+</schema>
