@@ -32,4 +32,16 @@
         
     </device>
     
+    <device type="RAM">
+        <name> PC6400</name>
+        <manufacturer>Kingmax</manufacturer>
+        <critical>true</critical>
+        <origin>Japan</origin>
+        <parameters>
+            <parameter name="memory_size">2048</parameter>
+            <parameter name="frequency">800</parameter>
+            <parameter name="type">DDR2</parameter>
+        </parameters>
+    </device>
+    
 </devices>

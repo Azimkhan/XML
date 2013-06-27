@@ -1,6 +1,9 @@
-package com.epam.azimkhan.devices.xml.sax.parser.exception;
+package com.epam.azimkhan.devices.xml.parser.exception;
 
 public class ParseException extends Exception {
+
+	
+	private static final long serialVersionUID = -2717933212485752584L;
 
 	public ParseException() {
 		super();

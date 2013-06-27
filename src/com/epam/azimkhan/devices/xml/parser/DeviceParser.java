@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.sax.parser;
+package com.epam.azimkhan.devices.xml.parser;
 
 import com.epam.azimkhan.devices.entity.core.Device;
 
@@ -9,6 +9,7 @@ public abstract class DeviceParser {
 	
 	protected Device device;
 	
+	public abstract void init();
 	public boolean parseAttribute(String name, String value){
 	
 		DeviceField filed = DeviceField.valueOf(name.toUpperCase());

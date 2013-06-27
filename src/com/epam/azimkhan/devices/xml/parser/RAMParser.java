@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.sax.parser;
+package com.epam.azimkhan.devices.xml.parser;
 
 import com.epam.azimkhan.devices.entity.core.RandomAccessMemory;
 import com.epam.azimkhan.devices.entity.core.RandomAccessMemory.RAMType;
@@ -8,10 +8,12 @@ public class RAMParser extends DeviceParser{
 	public enum RAMParameter{
 		MEMORY_SIZE, FREQUENCY, TYPE;
 	}
-	public RAMParser(){
-		device = new RandomAccessMemory();
-	}
 	
+	@Override
+	public void init() {
+		device = new RandomAccessMemory();
+		
+	}
 	@Override
 	public boolean parseParameter(String name, String value) {
 		RAMParameter parameter = RAMParameter.valueOf(name.toUpperCase());
@@ -36,5 +38,7 @@ public class RAMParser extends DeviceParser{
 	public boolean canHandle(String type) {
 		return type.toLowerCase().equals("ram");
 	}
+
+	
 
 }

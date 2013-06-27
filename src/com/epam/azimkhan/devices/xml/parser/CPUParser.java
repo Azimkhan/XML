@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.sax.parser;
+package com.epam.azimkhan.devices.xml.parser;
 
 import com.epam.azimkhan.devices.entity.core.CPU;
 import com.epam.azimkhan.devices.entity.core.CPU.CPUSocket;
@@ -9,8 +9,10 @@ public class CPUParser extends DeviceParser{
 		FREQUENCY, NUMBER_OF_CORES, NUMBER_OF_THREADS, CACHE_SIZE, SOCKET
 	}
 	
-	public CPUParser(){
+	@Override
+	public void init() {
 		this.device = new CPU();
+		
 	}
 	
 	@Override
@@ -51,5 +53,7 @@ public class CPUParser extends DeviceParser{
 	public boolean canHandle(String type) {
 		return type.toLowerCase().equals("cpu");
 	}
+
+	
 
 }

@@ -35,6 +35,8 @@ public class SAXRunner {
 			List<Device> devicesYoYo = handler.getDevices();
 			for(Device d :devicesYoYo ){
 				System.out.println(d.getName());
+				System.out.println(d.getOrigin());
+				System.out.println(d.getManufacturer());
 			}
 			
 		} catch (SAXException e) {

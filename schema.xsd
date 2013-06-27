@@ -67,7 +67,7 @@
     <complexType name="Parameter">
     	<simpleContent>
     		<extension base="string">
-    			<attribute name="name" type="string"></attribute>
+    			<attribute name="name" use="required" type="string"></attribute>
     		</extension>
     		
     	</simpleContent>
