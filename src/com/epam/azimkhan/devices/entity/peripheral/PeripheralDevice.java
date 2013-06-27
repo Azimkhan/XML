@@ -1,6 +1,7 @@
 package com.epam.azimkhan.devices.entity.peripheral;
 
 import java.util.HashMap;
+
 import com.epam.azimkhan.devices.entity.core.Device;
 
 /**

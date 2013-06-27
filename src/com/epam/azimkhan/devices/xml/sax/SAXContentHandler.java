@@ -10,6 +10,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.epam.azimkhan.devices.entity.core.Device;
 import com.epam.azimkhan.devices.xml.parser.CPUParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
+import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
 import com.epam.azimkhan.devices.xml.parser.RAMParser;
 
 /**
@@ -25,7 +26,7 @@ public class SAXContentHandler extends DefaultHandler {
 	/**
 	 * List of parsers
 	 */
-	private LinkedList<DeviceParser> parsers = new LinkedList<>();
+	private List<DeviceParser> parsers = DeviceParserFactory.getParsers();
 
 	/**
 	 * Last parameter name
@@ -43,8 +44,7 @@ public class SAXContentHandler extends DefaultHandler {
 	private DeviceParser currentParser = null;
 
 	public SAXContentHandler() {
-		parsers.add(new CPUParser());
-		parsers.add(new RAMParser());
+		super();
 	}
 
 	@Override
@@ -106,16 +106,16 @@ public class SAXContentHandler extends DefaultHandler {
 				lastParameterName = null;
 			} else {
 				throw new SAXException(String.format(
-						"Unable to parse paramter '%s'", lastParameterName));
+						"Unable to parse paramter with name '%s'", lastParameterName));
 			}
 		}
 
 		if (lastFieldName != null) {
-			if (currentParser.parseAttribute(lastFieldName, value)) {
+			if (currentParser.parseField(lastFieldName, value)) {
 				lastFieldName = null;
 			} else {
 				throw new SAXException(String.format(
-						"Unable to parse field '%s'", lastParameterName));
+						"Unable to parse field with name '%s'", lastParameterName));
 			}
 		}
 	}
@@ -126,7 +126,7 @@ public class SAXContentHandler extends DefaultHandler {
 	 * @param attributes
 	 * @throws SAXException
 	 */
-	public void findDeviceParser(Attributes attributes) throws SAXException {
+	private void findDeviceParser(Attributes attributes) throws SAXException {
 
 		String type = attributes.getValue("type");
 		if (type != null) {
@@ -150,7 +150,7 @@ public class SAXContentHandler extends DefaultHandler {
 		}
 	}
 
-	public void remeberParameterName(Attributes attributes) throws SAXException {
+	private void remeberParameterName(Attributes attributes) throws SAXException {
 		String parameterName = attributes.getValue("name");
 		if (parameterName != null) {
 			lastParameterName = parameterName;
