@@ -3,6 +3,7 @@ package com.epam.azimkhan.devices.xml.sax;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -16,6 +17,7 @@ import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
  */
 public class SAXContentHandler extends DefaultHandler {
 
+	public static final Logger logger = Logger.getRootLogger();
 	/**
 	 * List of parsed devices
 	 */
@@ -47,12 +49,12 @@ public class SAXContentHandler extends DefaultHandler {
 
 	@Override
 	public void startDocument() throws SAXException {
-		// TODO logging
+		logger.info("Document started");
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		// TODO logging
+		logger.info("Reached the end of the document");
 	}
 
 	/**
@@ -61,7 +63,7 @@ public class SAXContentHandler extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-
+		
 		// If is device
 		if (localName.equals("device")) {
 			findDeviceParser(attributes);
@@ -100,6 +102,7 @@ public class SAXContentHandler extends DefaultHandler {
 		String value = new String(ch, start, length).trim();
 
 		if (lastParameterName != null) {
+			logger.info(String.format("Parsing parameter '%s'", lastParameterName ));
 			if (currentParser.parseParameter(lastParameterName, value)) {
 				lastParameterName = null;
 			} else {
@@ -109,11 +112,12 @@ public class SAXContentHandler extends DefaultHandler {
 		}
 
 		if (lastFieldName != null) {
+			logger.info(String.format("Parsing field name='%s', value='%s'", lastFieldName, value ));
 			if (currentParser.parseField(lastFieldName, value)) {
 				lastFieldName = null;
 			} else {
 				throw new SAXException(String.format(
-						"Unable to parse field with name '%s'", lastParameterName));
+						"Unable to parse field with name '%s'", lastFieldName));
 			}
 		}
 	}
@@ -128,6 +132,7 @@ public class SAXContentHandler extends DefaultHandler {
 
 		String type = attributes.getValue("type");
 		if (type != null) {
+			logger.info(String.format("Device[%s] found. Searching for parser...", type));
 			// loop through parsers
 			for (DeviceParser parser : parsers) {
 				// if parser found
@@ -138,7 +143,9 @@ public class SAXContentHandler extends DefaultHandler {
 				}
 			}
 
-			if (currentParser == null) {
+			if (currentParser != null) {
+				logger.info(String.format("Parser found: %s", currentParser.getClass().getSimpleName()));
+			} else{
 				throw new SAXException(String.format(
 						"Unable to parse device with type '%s'", type));
 			}

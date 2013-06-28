@@ -33,12 +33,8 @@ public class SAXRunner {
 			SAXContentHandler handler = new SAXContentHandler();
 			reader.setContentHandler(handler);
 			reader.parse(filename);
-			List<Device> devicesYoYo = handler.getDevices();
-			for(Device d :devicesYoYo ){
-				System.out.println(d.getName());
-				System.out.println(d.getOrigin());
-				System.out.println(d.getManufacturer());
-			}
+			List<Device> devices = handler.getDevices();
+			
 			
 		} catch (SAXException e) {
 			logger.error(String.format("Parse exception: %s", e.getMessage()));

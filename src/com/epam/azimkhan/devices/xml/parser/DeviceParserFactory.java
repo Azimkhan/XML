@@ -54,6 +54,7 @@ public class DeviceParserFactory {
 	private static boolean loadFromFile(List<DeviceParser> parsers) {
 		String classpath = System.getProperty("java.class.path");
 		String filename = classpath + "/parsers.properties";
+		// TODO classpath
 		File file = new File(filename);
 		FileInputStream fis = null;
 		
@@ -77,27 +78,21 @@ public class DeviceParserFactory {
 
 			}
 		} catch (FileNotFoundException e) {
-			// TODO logging
-			e.printStackTrace();
+			logger.error(String.format("File error: %s", e.getMessage()));
 		} catch (IOException e) {
-			// TODO logging
-			e.printStackTrace();
-		} catch (InstantiationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error(String.format("Input/output error: %s", e.getMessage()));
+		} catch (InstantiationException e) {
+			logger.error(String.format("Unable to instantiate class: %s", e.getMessage()));
+		} catch (IllegalAccessException e) {
+			logger.error(String.format("Class access error: %s", e.getMessage()));
+		} catch (ClassNotFoundException e) {
+			logger.error(String.format("Class not found: %s", e.getMessage()));
 		} finally{
 			if (null != fis){
 				try {
 					fis.close();
 				} catch (IOException e) {
-					// TODO logging
-					e.printStackTrace();
+					logger.error(String.format("Failed to close properties file: %s"));
 				}
 			}
 		}

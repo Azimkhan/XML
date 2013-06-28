@@ -32,12 +32,8 @@ public class DOMRunner {
 			Document document = db.parse(filename);
 			DeviceParserFactory.getParsers();
 			DOMAnalyzer analyzer = DOMAnalyzer.getInstance();
-			List<Device> devicesYoYo = analyzer.buildList(document.getDocumentElement());
-			for(Device d :devicesYoYo ){
-				System.out.println(d.getName());
-				System.out.println(d.getOrigin());
-				System.out.println(d.getManufacturer());
-			}
+			List<Device> devices = analyzer.buildList(document.getDocumentElement());
+			
 			
 			
 		} catch (ParserConfigurationException e) {
