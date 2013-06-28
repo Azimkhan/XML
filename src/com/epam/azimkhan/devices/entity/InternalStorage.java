@@ -1,8 +1,9 @@
-package com.epam.azimkhan.devices.entity.core;
+package com.epam.azimkhan.devices.entity;
 
-import com.epam.azimkhan.devices.entity.storage.Storage;
-
-public class InternalStorage extends Device implements Storage{
+/**
+ * Internal storage
+ */
+public class InternalStorage extends Device{
 	
 	public enum DiskType{
 		HDD, SSD

@@ -1,6 +1,6 @@
 package com.epam.azimkhan.devices.xml.parser;
 
-import com.epam.azimkhan.devices.entity.core.Device;
+import com.epam.azimkhan.devices.entity.Device;
 
 public abstract class DeviceParser {
 	public enum DeviceField {

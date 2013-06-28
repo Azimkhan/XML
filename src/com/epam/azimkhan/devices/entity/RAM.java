@@ -1,11 +1,11 @@
-package com.epam.azimkhan.devices.entity.core;
+package com.epam.azimkhan.devices.entity;
 
 import java.io.Serializable;
 
 /**
  * RAM
  */
-public class RandomAccessMemory extends Device implements Cloneable, Serializable{
+public class RAM extends Device implements Cloneable, Serializable{
 	
 	private static final long serialVersionUID = 5165872341166142516L;
 
@@ -31,13 +31,13 @@ public class RandomAccessMemory extends Device implements Cloneable, Serializabl
 	 */
 	private  RAMType type;
 
-	public RandomAccessMemory(){
+	public RAM(){
 		super();
 	}
 	
 	
 
-	public RandomAccessMemory(String name, String manufacturer, String origin,
+	public RAM(String name, String manufacturer, String origin,
 			int price, double powerConsumption, int memorySize, int frequency,
 			RAMType type, boolean critical) {
 		super(name, manufacturer, origin, price, powerConsumption, critical);
@@ -108,7 +108,7 @@ public class RandomAccessMemory extends Device implements Cloneable, Serializabl
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RandomAccessMemory other = (RandomAccessMemory) obj;
+		RAM other = (RAM) obj;
 		if (frequency != other.frequency)
 			return false;
 		if (memorySize != other.memorySize)

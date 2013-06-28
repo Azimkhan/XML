@@ -1,7 +1,7 @@
 package com.epam.azimkhan.devices.xml.parser;
 
-import com.epam.azimkhan.devices.entity.core.CPU;
-import com.epam.azimkhan.devices.entity.core.CPU.CPUSocket;
+import com.epam.azimkhan.devices.entity.CPU;
+import com.epam.azimkhan.devices.entity.CPU.CPUSocket;
 
 public class CPUParser extends DeviceParser{
 

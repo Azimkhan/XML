@@ -1,7 +1,7 @@
 package com.epam.azimkhan.devices.xml.parser;
 
-import com.epam.azimkhan.devices.entity.core.RandomAccessMemory;
-import com.epam.azimkhan.devices.entity.core.RandomAccessMemory.RAMType;
+import com.epam.azimkhan.devices.entity.RAM;
+import com.epam.azimkhan.devices.entity.RAM.RAMType;
 
 public class RAMParser extends DeviceParser{
 
@@ -11,13 +11,13 @@ public class RAMParser extends DeviceParser{
 	
 	@Override
 	public void init() {
-		device = new RandomAccessMemory();
+		device = new RAM();
 		
 	}
 	@Override
 	public boolean parseParameter(String name, String value) {
 		RAMParameter parameter = RAMParameter.valueOf(name.toUpperCase());
-		RandomAccessMemory ram = (RandomAccessMemory) device;
+		RAM ram = (RAM) device;
 		
 		switch (parameter) {
 		case MEMORY_SIZE:

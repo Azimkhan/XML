@@ -8,11 +8,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.epam.azimkhan.devices.entity.core.Device;
-import com.epam.azimkhan.devices.xml.parser.CPUParser;
+import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
-import com.epam.azimkhan.devices.xml.parser.RAMParser;
 import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 
 /**
@@ -20,15 +18,32 @@ import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
  */
 public class DOMAnalyzer {
 	
+	/**
+	 * Singleton instance
+	 */
 	private static DOMAnalyzer instance = null;
 	
+	/**
+	 * List of parsers
+	 */
 	private List<DeviceParser> parsers = DeviceParserFactory.getParsers();
+	
+	/**
+	 * Current parser
+	 */
 	private DeviceParser currentParser;
 	
+	/**
+	 * Singleton constructor
+	 */
 	private DOMAnalyzer(){
 		super();
 	}
 	
+	/**
+	 * Retrieve instance
+	 * @return DOM analyzer
+	 */
 	public static DOMAnalyzer getInstance(){
 		if (null == instance){
 			instance = new DOMAnalyzer();

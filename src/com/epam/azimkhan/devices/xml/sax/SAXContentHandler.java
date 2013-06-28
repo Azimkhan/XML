@@ -7,11 +7,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.epam.azimkhan.devices.entity.core.Device;
-import com.epam.azimkhan.devices.xml.parser.CPUParser;
+import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
-import com.epam.azimkhan.devices.xml.parser.RAMParser;
 
 /**
  * "Simple API for XML Processing" handler

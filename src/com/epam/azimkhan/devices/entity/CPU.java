@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.entity.core;
+package com.epam.azimkhan.devices.entity;
 
 import java.io.Serializable;
 

@@ -6,11 +6,12 @@ package com.epam.azimkhan.devices.runner;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import com.epam.azimkhan.devices.entity.core.Device;
+import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.sax.SAXContentHandler;
 
 /**
@@ -18,7 +19,7 @@ import com.epam.azimkhan.devices.xml.sax.SAXContentHandler;
  */
 public class SAXRunner {
 
-	
+	public static final Logger logger = Logger.getRootLogger();
 	
 	/**
 	 * @param args
@@ -40,11 +41,9 @@ public class SAXRunner {
 			}
 			
 		} catch (SAXException e) {
-			e.printStackTrace();
-			//TODO Logging
+			logger.error(String.format("Parse exception: %s", e.getMessage()));
 		} catch (IOException e) {
-			e.printStackTrace();
-			//TODO logging
+			logger.error(String.format("Input/output error: %s", e.getMessage()));
 		}
 
 	}
