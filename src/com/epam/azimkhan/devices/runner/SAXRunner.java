@@ -12,7 +12,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.epam.azimkhan.devices.entity.Device;
-import com.epam.azimkhan.devices.xml.sax.SAXContentHandler;
+import com.epam.azimkhan.devices.xml.sax.SAXDeviceHandler;
 
 /**
  * SAX version
@@ -30,7 +30,7 @@ public class SAXRunner {
 		
 		try {
 			XMLReader reader = XMLReaderFactory.createXMLReader();
-			SAXContentHandler handler = new SAXContentHandler();
+			SAXDeviceHandler handler = new SAXDeviceHandler();
 			reader.setContentHandler(handler);
 			reader.parse(filename);
 			List<Device> devices = handler.getDevices();

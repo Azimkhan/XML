@@ -3,6 +3,7 @@ package com.epam.azimkhan.devices.xml.dom;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -16,12 +17,15 @@ import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 /**
  * DOM version
  */
-public class DOMAnalyzer {
+public class DOMDeviceAnalyzer {
+	
+	//TODO string external.
+	
 	
 	/**
 	 * Singleton instance
 	 */
-	private static DOMAnalyzer instance = null;
+	private static DOMDeviceAnalyzer instance = null;
 	
 	/**
 	 * List of parsers
@@ -36,7 +40,10 @@ public class DOMAnalyzer {
 	/**
 	 * Singleton constructor
 	 */
-	private DOMAnalyzer(){
+	
+	public static final Logger logger = Logger.getRootLogger();
+	
+	private DOMDeviceAnalyzer(){
 		super();
 	}
 	
@@ -44,9 +51,9 @@ public class DOMAnalyzer {
 	 * Retrieve instance
 	 * @return DOM analyzer
 	 */
-	public static DOMAnalyzer getInstance(){
+	public static DOMDeviceAnalyzer getInstance(){
 		if (null == instance){
-			instance = new DOMAnalyzer();
+			instance = new DOMDeviceAnalyzer();
 		}
 		
 		return instance;
@@ -59,10 +66,12 @@ public class DOMAnalyzer {
 	 * @throws ParseException
 	 */
 	public List<Device> buildList(Element rootElement) throws ParseException{
+	
 		LinkedList<Device> devices = new LinkedList<>();
 		
 		NodeList childern = rootElement.getChildNodes();
 		
+		logger.info("Document started");
 		for (int i = 0; i < childern.getLength(); i++){
 			Node node = childern.item(i);
 			if (node.getNodeName().equals("device")){
@@ -71,7 +80,7 @@ public class DOMAnalyzer {
 				devices.add(device);
 			}
 		}
-		
+		logger.info("Reached the end of the document");
 		return devices;
 		
 	}
@@ -116,7 +125,7 @@ public class DOMAnalyzer {
 	private void findDeviceParser(String type) throws ParseException {
 
 		if (type != null) {
-			
+			logger.info(String.format("Device[%s] found. Searching for parser...", type));
 			// loop through parsers
 			for (DeviceParser parser : parsers) {
 				// if parser found
@@ -127,7 +136,9 @@ public class DOMAnalyzer {
 				}
 			}
 
-			if (currentParser == null) {
+			if (currentParser != null) {
+				logger.info(String.format("Parser found: %s", currentParser.getClass().getSimpleName()));
+			} else{
 				throw new ParseException(String.format(
 						"Unable to parse device with type '%s'", type));
 			}
@@ -145,6 +156,7 @@ public class DOMAnalyzer {
 	 */
 	private void parseField(String name, String value) throws ParseException{
 		boolean result = currentParser.parseField(name, value);
+		logger.info(String.format("Parsing field name='%s', value='%s'", name, value ));
 		
 		if (!result){
 			throw new ParseException(String.format("Unable to parse field with name '%s'", name));
@@ -164,7 +176,7 @@ public class DOMAnalyzer {
 			String name = nodeAttribute(parameter, "name");
 			String value = nodeText(parameter);
 			
-			
+			logger.info(String.format("Parsing parameter name='%s', value='%s'", name, value ));
 			
 				boolean result = currentParser.parseParameter(name, value);
 				

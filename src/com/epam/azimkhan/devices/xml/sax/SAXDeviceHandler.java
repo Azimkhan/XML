@@ -15,8 +15,11 @@ import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
 /**
  * "Simple API for XML Processing" handler
  */
-public class SAXContentHandler extends DefaultHandler {
+public class SAXDeviceHandler extends DefaultHandler {
 
+	//TODO string external.
+	
+	
 	public static final Logger logger = Logger.getRootLogger();
 	/**
 	 * List of parsed devices
@@ -43,7 +46,7 @@ public class SAXContentHandler extends DefaultHandler {
 	 */
 	private DeviceParser currentParser = null;
 
-	public SAXContentHandler() {
+	public SAXDeviceHandler() {
 		super();
 	}
 
@@ -75,9 +78,7 @@ public class SAXContentHandler extends DefaultHandler {
 			} else {
 				lastFieldName = localName;
 			}
-
 		}
-
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class SAXContentHandler extends DefaultHandler {
 		String value = new String(ch, start, length).trim();
 
 		if (lastParameterName != null) {
-			logger.info(String.format("Parsing parameter '%s'", lastParameterName ));
+			logger.info(String.format("Parsing parameter name='%s', value='%s'", lastParameterName, value ));
 			if (currentParser.parseParameter(lastParameterName, value)) {
 				lastParameterName = null;
 			} else {
@@ -155,6 +156,11 @@ public class SAXContentHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * remember the name of last parameter
+	 * @param attributes
+	 * @throws SAXException
+	 */
 	private void remeberParameterName(Attributes attributes) throws SAXException {
 		String parameterName = attributes.getValue("name");
 		if (parameterName != null) {
@@ -165,6 +171,10 @@ public class SAXContentHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * return parsed devices
+	 * @return
+	 */
 	public List<Device> getDevices() {
 		return devices;
 	}

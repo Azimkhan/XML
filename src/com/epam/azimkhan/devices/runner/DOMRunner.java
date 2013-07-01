@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.epam.azimkhan.devices.entity.Device;
-import com.epam.azimkhan.devices.xml.dom.DOMAnalyzer;
+import com.epam.azimkhan.devices.xml.dom.DOMDeviceAnalyzer;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
 import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 
@@ -31,7 +31,7 @@ public class DOMRunner {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document document = db.parse(filename);
 			DeviceParserFactory.getParsers();
-			DOMAnalyzer analyzer = DOMAnalyzer.getInstance();
+			DOMDeviceAnalyzer analyzer = DOMDeviceAnalyzer.getInstance();
 			List<Device> devices = analyzer.buildList(document.getDocumentElement());
 			
 			
