@@ -1,75 +1,108 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/schema" xmlns:tns="http://www.example.org/schema" elementFormDefault="qualified">
+<?xml version="1.1" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/schema" xmlns:tns="http://www.example.org/schema"
+	elementFormDefault="qualified">
 
-	<element name="devices">
-		<complexType>
-			<sequence>
-				<element name="device" type="tns:Device"  minOccurs="1" maxOccurs="unbounded"></element>
-			</sequence>
-		</complexType>
-	</element>
-	
-	<complexType name="Device">
-		<sequence>
-			<element name="name" type="string" minOccurs="1"
-				maxOccurs="1">
-			</element>
-			<element name="origin" type="string" minOccurs="1"
-				maxOccurs="1">
-			</element>
-			<element name="manufacturer" type="string" minOccurs="1"
-				maxOccurs="1">
-			</element>
-			<element name="price" type="integer" minOccurs="1"
-				maxOccurs="1">
-			</element>
-			<element name="critical" type="boolean" minOccurs="1"
-				maxOccurs="1">
-			</element>
-			<element name="group" type="tns:DeviceGroup" minOccurs="0"
-				maxOccurs="1">
-			</element>
-			<element name="parameters" type="tns:Paramters" minOccurs="1"
-				maxOccurs="1">
-			</element>
-		</sequence>
 
-		<attribute name="type" type="tns:DeviceType" use="required"></attribute>
-	</complexType>
-
-	<simpleType name="DeviceGroup">
-		<restriction base="string">
-			<enumeration value="Multimedia"></enumeration>
-			<enumeration value="Input"></enumeration>
-			<enumeration value="Output"></enumeration>
-		</restriction>
-	</simpleType>
-
-	<complexType name="Paramters">
-		<sequence>
-			<element name="parameter" type="tns:Parameter" minOccurs="1" maxOccurs="unbounded"></element>
-		</sequence>
-	</complexType>
-	
+	<xs:element name="devices">
 		
-    <simpleType name="DeviceType">
-    	<restriction base="string">
-    		<enumeration value="PERIPHERAL"></enumeration>
-    		<enumeration value="INTERNAL_STORAGE"></enumeration>
-    		<enumeration value="RAM"></enumeration>
-    		<enumeration value="CPU"></enumeration>
-    	</restriction>
-    </simpleType>
-    
+        <xs:complexType>
+			<xs:sequence>
+			<xs:choice minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="cpu" type="tns:CPU"></xs:element>
+				<xs:element name="ram" type="tns:RAM"></xs:element>
+			</xs:choice>
+			
+			</xs:sequence>
+			
+		</xs:complexType>
+    </xs:element>
+
+
+	<xs:complexType name="Device">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="origin" type="xs:string" minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="manufacturer" type="xs:string" minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="price" type="xs:integer" minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="critical" type="xs:boolean" minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="group" type="tns:DeviceGroup" minOccurs="0" maxOccurs="1">
+			</xs:element>
+		</xs:sequence>
+
+		
+	</xs:complexType>
+
+	<xs:simpleType name="DeviceGroup">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Multimedia"></xs:enumeration>
+			<xs:enumeration value="Input"></xs:enumeration>
+			<xs:enumeration value="Output"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
 
 
 
-    <complexType name="Parameter">
-    	<simpleContent>
-    		<extension base="string">
-    			<attribute name="name" use="required" type="string"></attribute>
-    		</extension>
-    		
-    	</simpleContent>
-    </complexType>
-</schema>
+
+	<xs:complexType name="CPU">
+		<xs:complexContent>
+			<xs:extension base="tns:Device">
+					<xs:sequence>
+						<xs:element name="frequency" type="tns:Frequency"/>
+						<xs:element name="number_of_cores" type="xs:int"/>
+						<xs:element name="number_of_threads" type="xs:int"/>
+						<xs:element name="socket">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="LGA1155"></xs:enumeration>
+									<xs:enumeration value="LGA2011"></xs:enumeration>
+									<xs:enumeration value="AM3PLUS"></xs:enumeration>
+									<xs:enumeration value="FM2"></xs:enumeration>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="cache_size" type="tns:Size"/>
+					</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="RAMType">
+	
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DDR"></xs:enumeration>
+			<xs:enumeration value="DDR2"></xs:enumeration>
+			<xs:enumeration value="DDR3"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<xs:complexType name="RAM">
+		<xs:complexContent>
+			<xs:extension base="tns:Device">
+				<xs:sequence>
+					<xs:element name="frequency" type="tns:Frequency" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="memory_size" type="tns:Size" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="type" type="tns:RAMType" minOccurs="1" maxOccurs="1"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:simpleType name="Size">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9][0-9]*(Mb?)?"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+						
+	<xs:simpleType name="Frequency">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9][0-9]*(\s*(Mhz|Ghz))?"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>	
+</xs:schema>

@@ -67,18 +67,12 @@ public class SAXDeviceHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		
-		// If is device
-		if (localName.equals("device")) {
-			findDeviceParser(attributes);
-		} else if (!localName.equals("parameters")
-				&& !localName.equals("devices")){
-			// otherwise
-			if (localName.equals("parameter")) {
-				remeberParameterName(attributes);
-			} else {
-				lastFieldName = localName;
-			}
-		}
+		if (!localName.equals("devices")){
+		if (localName.equals("ram") || localName.equals("cpu")){
+			findDeviceParser(localName);
+		} else{
+			lastFieldName = localName;
+		}}
 	}
 
 	/**
@@ -87,7 +81,7 @@ public class SAXDeviceHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		if (localName.equals("device")) {
+		if (localName.equals("ram") || localName.equals("cpu")) {
 			devices.add(currentParser.getDevice());
 			currentParser = null;
 		}
@@ -101,16 +95,7 @@ public class SAXDeviceHandler extends DefaultHandler {
 			throws SAXException {
 
 		String value = new String(ch, start, length).trim();
-
-		if (lastParameterName != null) {
-			logger.info(String.format("Parsing parameter name='%s', value='%s'", lastParameterName, value ));
-			if (currentParser.parseParameter(lastParameterName, value)) {
-				lastParameterName = null;
-			} else {
-				throw new SAXException(String.format(
-						"Unable to parse paramter with name '%s'", lastParameterName));
-			}
-		}
+		
 
 		if (lastFieldName != null) {
 			logger.info(String.format("Parsing field name='%s', value='%s'", lastFieldName, value ));
@@ -129,9 +114,8 @@ public class SAXDeviceHandler extends DefaultHandler {
 	 * @param attributes
 	 * @throws SAXException
 	 */
-	private void findDeviceParser(Attributes attributes) throws SAXException {
+	private void findDeviceParser(String type) throws SAXException {
 
-		String type = attributes.getValue("type");
 		if (type != null) {
 			logger.info(String.format("Device[%s] found. Searching for parser...", type));
 			// loop through parsers
@@ -156,20 +140,7 @@ public class SAXDeviceHandler extends DefaultHandler {
 		}
 	}
 
-	/**
-	 * remember the name of last parameter
-	 * @param attributes
-	 * @throws SAXException
-	 */
-	private void remeberParameterName(Attributes attributes) throws SAXException {
-		String parameterName = attributes.getValue("name");
-		if (parameterName != null) {
-			lastParameterName = parameterName;
-		} else {
-			throw new SAXException(String.format(
-					"Attribute '%s' for parameter is required'", "name"));
-		}
-	}
+	
 
 	/**
 	 * return parsed devices

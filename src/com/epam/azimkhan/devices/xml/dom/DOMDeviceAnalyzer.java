@@ -10,9 +10,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.epam.azimkhan.devices.entity.Device;
+import com.epam.azimkhan.devices.xml.exception.ParseException;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
-import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 
 /**
  * DOM version

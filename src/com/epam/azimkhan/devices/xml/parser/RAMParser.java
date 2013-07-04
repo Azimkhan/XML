@@ -14,25 +14,37 @@ public class RAMParser extends DeviceParser{
 		device = new RAM();
 		
 	}
+	
+	
 	@Override
-	public boolean parseParameter(String name, String value) {
-		RAMParameter parameter = RAMParameter.valueOf(name.toUpperCase());
-		RAM ram = (RAM) device;
-		
-		switch (parameter) {
-		case MEMORY_SIZE:
-			ram.setMemorySize(Integer.parseInt(value));
+	public boolean parseField(String name, String value) {
+		if (super.parseField(name, value)){
 			return true;
-		case FREQUENCY:
-			ram.setFrequency(Integer.parseInt(value));
-			return true;
-		case TYPE:
-			ram.setType(RAMType.valueOf(value.toUpperCase()));
-			return true;
-		default:
-			return false;
 		}
+		
+		if(name != null && value != null){
+			RAMParameter parameter = RAMParameter.valueOf(name.toUpperCase());
+			RAM ram = (RAM) device;
+			
+			switch (parameter) {
+			case MEMORY_SIZE:
+				ram.setMemorySize(Integer.parseInt(value));
+				return true;
+			case FREQUENCY:
+				ram.setFrequency(Integer.parseInt(value));
+				return true;
+			case TYPE:
+				ram.setType(RAMType.valueOf(value.toUpperCase()));
+				return true;
+			default:
+				return false;
+			}
+		}
+		
+		return false;
+		
 	}
+
 
 	@Override
 	public boolean canHandle(String type) {

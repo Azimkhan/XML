@@ -5,7 +5,7 @@ import java.util.List;
 import javax.xml.stream.XMLStreamReader;
 
 import com.epam.azimkhan.devices.entity.Device;
-import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
+import com.epam.azimkhan.devices.xml.exception.ParseException;
 
 public class StAXDeviceAnalyzer {
 	public static List<Device> buildList(XMLStreamReader reader) throws ParseException{

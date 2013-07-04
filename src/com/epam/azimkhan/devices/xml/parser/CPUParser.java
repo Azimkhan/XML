@@ -16,13 +16,16 @@ public class CPUParser extends DeviceParser{
 	}
 	
 	@Override
-	public boolean parseParameter(String name, String value) {
+	public boolean parseField(String name, String value){
+		if (super.parseField(name, value)){
+			return true;
+		}
+		
 		if (name != null && value != null){
 			
 			CPUParameter cpuParameter = CPUParameter.valueOf(name.toUpperCase());
 			CPU cpu = (CPU) device;
 			
-			// TODO polymorph :)
 			switch (cpuParameter) {
 			case CACHE_SIZE:
 				cpu.setCacheSize(Integer.parseInt(value));
@@ -48,6 +51,7 @@ public class CPUParser extends DeviceParser{
 		
 		return false;
 	}
+	
 
 	@Override
 	public boolean canHandle(String type) {

@@ -40,7 +40,6 @@ public abstract class DeviceParser {
 		return false;
 	}
 
-	public abstract boolean parseParameter(String name, String value);
 
 	public abstract boolean canHandle(String type);
 

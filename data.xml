@@ -2,46 +2,42 @@
 
 <devices xmlns="http://www.example.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.example.org/schema ./schema.xsd">
+	<ram>
+		<name>PC10600</name>
+		<origin>USA</origin>
+		<manufacturer>Transcend</manufacturer>
+		<price>11740</price>
+		<critical>true</critical>
+		<frequency>1333</frequency>
+		<memory_size>8192</memory_size>
+		<type>DDR3</type>
+
+	</ram>
 	
-    <device type="CPU">
-        <name>Core i3 3240</name>
-        <origin>USA</origin>
-        <manufacturer>Intel</manufacturer>
-        <price>12350</price>
-        <critical>true</critical>
-        <parameters>
-            <parameter name="frequency">3400</parameter>
-            <parameter name="number_of_cores">2</parameter>
-            <parameter name="number_of_threads">4</parameter>
-            <parameter name="socket">LGA1155</parameter>
-        </parameters>
-        
-    </device>
-    
-    <device type="RAM">
-        <name>PC10600</name>
-        <origin>USA</origin>
-        <manufacturer>Transcend</manufacturer>
-        <price>11740</price>
-        <critical>true</critical>
-        <parameters>
-            <parameter name="frequency">1333</parameter>
-            <parameter name="memory_size">8192</parameter>
-            <parameter name="type">DDR3</parameter>
-        </parameters>
-        
-    </device>
-    
-    <device type="RAM">
-        <name> PC6400</name>
-        <manufacturer>Kingmax</manufacturer>
-        <critical>true</critical>
-        <origin>Japan</origin>
-        <parameters>
-            <parameter name="memory_size">2048</parameter>
-            <parameter name="frequency">800</parameter>
-            <parameter name="type">DDR2</parameter>
-        </parameters>
-    </device>
-    
+	<cpu>
+		<name>Core i3 3240</name>
+		<origin>USA</origin>
+		<manufacturer>Intel</manufacturer>
+		<price>12350</price>
+		<critical>true</critical>
+		<frequency>3400Mhz</frequency>
+		<number_of_cores>2</number_of_cores>
+		<number_of_threads>4</number_of_threads>
+		<socket>LGA1155</socket>
+		<cache_size>2</cache_size>
+	</cpu>
+
+
+
+	<ram>
+		<name> PC6400</name>
+		<origin>Japan</origin>
+		<manufacturer>Kingmax</manufacturer>
+		<price>11740</price>
+		<critical>true</critical>
+		<frequency>800Mhz</frequency>
+		<memory_size>2048</memory_size>
+		<type>DDR2</type>
+	</ram>
+
 </devices>
