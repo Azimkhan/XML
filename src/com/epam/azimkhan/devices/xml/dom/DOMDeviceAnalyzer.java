@@ -30,7 +30,7 @@ public class DOMDeviceAnalyzer {
 	/**
 	 * List of parsers
 	 */
-	private List<DeviceParser> parsers = DeviceParserFactory.getParsers();
+	private DeviceParserFactory parserFactory = new DeviceParserFactory();
 	
 	/**
 	 * Current parser
@@ -127,15 +127,7 @@ public class DOMDeviceAnalyzer {
 		if (type != null) {
 			logger.info(String.format("Device[%s] found. Searching for parser...", type));
 			// loop through parsers
-			for (DeviceParser parser : parsers) {
-				// if parser found
-				if (parser.canHandle(type)) {
-					currentParser = parser;
-					parser.init();
-					break;
-				}
-			}
-
+			currentParser = parserFactory.getParser(type);
 			if (currentParser != null) {
 				logger.info(String.format("Parser found: %s", currentParser.getClass().getSimpleName()));
 			} else{
@@ -178,11 +170,13 @@ public class DOMDeviceAnalyzer {
 			
 			logger.info(String.format("Parsing parameter name='%s', value='%s'", name, value ));
 			
+			/*
 				boolean result = currentParser.parseParameter(name, value);
 				
 				if (!result){
 					throw new ParseException(String.format("Unable to parse paramter with name'%s'", name));
 				}
+				*/
 			} 
 			
 		}

@@ -17,9 +17,8 @@ import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
  */
 public class SAXDeviceHandler extends DefaultHandler {
 
-	//TODO string external.
-	
-	
+	// TODO string external.
+
 	public static final Logger logger = Logger.getRootLogger();
 	/**
 	 * List of parsed devices
@@ -27,14 +26,9 @@ public class SAXDeviceHandler extends DefaultHandler {
 	private LinkedList<Device> devices = new LinkedList<>();
 
 	/**
-	 * List of parsers
+	 * Device parser factory
 	 */
-	private List<DeviceParser> parsers = DeviceParserFactory.getParsers();
-
-	/**
-	 * Last parameter name
-	 */
-	private String lastParameterName = null;
+	private DeviceParserFactory parserFactory = new DeviceParserFactory();
 
 	/**
 	 * Last field name, e.g. <name>, <origin> and etc.
@@ -66,13 +60,14 @@ public class SAXDeviceHandler extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		
-		if (!localName.equals("devices")){
-		if (localName.equals("ram") || localName.equals("cpu")){
-			findDeviceParser(localName);
-		} else{
-			lastFieldName = localName;
-		}}
+
+		if (!localName.equals("devices")) {
+			if (currentParser == null) {
+				findDeviceParser(localName);
+			} else {
+				lastFieldName = localName;
+			}
+		}
 	}
 
 	/**
@@ -81,10 +76,14 @@ public class SAXDeviceHandler extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		if (localName.equals("ram") || localName.equals("cpu")) {
-			devices.add(currentParser.getDevice());
-			currentParser = null;
+		
+		if (!localName.equals("devices")){
+			if (parserFactory.hasDevice(localName)) {
+				devices.add(currentParser.getDevice());
+				currentParser = null;
+			}
 		}
+		
 	}
 
 	/**
@@ -95,10 +94,10 @@ public class SAXDeviceHandler extends DefaultHandler {
 			throws SAXException {
 
 		String value = new String(ch, start, length).trim();
-		
 
 		if (lastFieldName != null) {
-			logger.info(String.format("Parsing field name='%s', value='%s'", lastFieldName, value ));
+			logger.info(String.format("Parsing field name='%s', value='%s'",
+					lastFieldName, value));
 			if (currentParser.parseField(lastFieldName, value)) {
 				lastFieldName = null;
 			} else {
@@ -117,20 +116,16 @@ public class SAXDeviceHandler extends DefaultHandler {
 	private void findDeviceParser(String type) throws SAXException {
 
 		if (type != null) {
-			logger.info(String.format("Device[%s] found. Searching for parser...", type));
-			// loop through parsers
-			for (DeviceParser parser : parsers) {
-				// if parser found
-				if (parser.canHandle(type)) {
-					currentParser = parser;
-					parser.init();
-					break;
-				}
-			}
+			logger.info(String.format(
+					"Device[%s] found. Searching for parser...", type));
+
+			currentParser = parserFactory.getParser(type);
 
 			if (currentParser != null) {
-				logger.info(String.format("Parser found: %s", currentParser.getClass().getSimpleName()));
-			} else{
+				logger.info(String.format("Parser found: %s", currentParser
+						.getClass().getSimpleName()));
+				currentParser.init();
+			} else {
 				throw new SAXException(String.format(
 						"Unable to parse device with type '%s'", type));
 			}
@@ -140,10 +135,9 @@ public class SAXDeviceHandler extends DefaultHandler {
 		}
 	}
 
-	
-
 	/**
 	 * return parsed devices
+	 * 
 	 * @return
 	 */
 	public List<Device> getDevices() {

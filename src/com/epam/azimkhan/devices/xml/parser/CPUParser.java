@@ -2,9 +2,14 @@ package com.epam.azimkhan.devices.xml.parser;
 
 import com.epam.azimkhan.devices.entity.CPU;
 import com.epam.azimkhan.devices.entity.CPU.CPUSocket;
+import com.epam.azimkhan.devices.entity.Device;
+import com.epam.azimkhan.devices.util.EnumUtils;
+import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 
 public class CPUParser extends DeviceParser{
 
+	private CPU device;
+	
 	public enum CPUParameter{
 		FREQUENCY, NUMBER_OF_CORES, NUMBER_OF_THREADS, CACHE_SIZE, SOCKET
 	}
@@ -24,25 +29,33 @@ public class CPUParser extends DeviceParser{
 		if (name != null && value != null){
 			
 			CPUParameter cpuParameter = CPUParameter.valueOf(name.toUpperCase());
-			CPU cpu = (CPU) device;
+			
 			
 			switch (cpuParameter) {
 			case CACHE_SIZE:
-				cpu.setCacheSize(Integer.parseInt(value));
+				device.setCacheSize(Integer.parseInt(value));
 				return true;
 			case FREQUENCY:
-				cpu.setFrequency(Integer.parseInt(value));
-				//TODO regex
-				return true;
+				try {
+					device.setFrequency(FieldParser.parseFrequency(value));
+					return true;
+				} catch (ParseException e) {
+					return false;
+				}
 			case NUMBER_OF_CORES:
-				cpu.setNumberOfCores(Integer.parseInt(value));
+				device.setNumberOfCores(Integer.parseInt(value));
 				return true;
 			case NUMBER_OF_THREADS:
-				cpu.setNumberOfThreads(Integer.parseInt(value));
+				device.setNumberOfThreads(Integer.parseInt(value));
 				return true;
 			case SOCKET:
-				cpu.setSocket(CPUSocket.valueOf(value.toUpperCase()));
-				return true;
+				CPUSocket socket = EnumUtils.lookup(CPUSocket.class, value);
+				if (socket != null){
+					device.setSocket(socket);
+					return true;
+				} else{
+					return false;
+				}
 			default:
 				return false;
 			}
@@ -54,10 +67,9 @@ public class CPUParser extends DeviceParser{
 	
 
 	@Override
-	public boolean canHandle(String type) {
-		return type.toLowerCase().equals("cpu");
+	public Device getDevice(){
+		return device;
 	}
-
 	
 
 }

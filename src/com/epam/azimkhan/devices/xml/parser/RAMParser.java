@@ -1,13 +1,53 @@
 package com.epam.azimkhan.devices.xml.parser;
 
+import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.entity.RAM;
 import com.epam.azimkhan.devices.entity.RAM.RAMType;
+import com.epam.azimkhan.devices.util.EnumUtils;
+import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
 
 public class RAMParser extends DeviceParser{
 
-	public enum RAMParameter{
-		MEMORY_SIZE, FREQUENCY, TYPE;
+	
+	enum RAMFieldHandler{
+		MEMORY_SIZE {
+			@Override
+			public boolean handle(RAM device, String value) {
+				try {
+					device.setMemorySize(FieldParser.parseSize(value));
+					return true;
+				} catch (ParseException e) {
+					return false;
+				}
+			}
+		}, FREQUENCY {
+			@Override
+			public boolean handle(RAM device, String value) {
+				try {
+					device.setFrequency(FieldParser.parseFrequency(value));
+					return true;
+				} catch (ParseException e) {
+					return false;
+				}
+			}
+		}, TYPE {
+			@Override
+			public boolean handle(RAM device, String value) {
+				RAMType type = EnumUtils.lookup(RAMType.class, value);
+				if (type != null){
+					device.setType(type);
+					return true;
+				} else{
+					return false;
+				}
+			}
+		};
+
+		public abstract boolean handle(RAM device, String value);
 	}
+	
+	private RAM device;
+	
 	
 	@Override
 	public void init() {
@@ -23,20 +63,10 @@ public class RAMParser extends DeviceParser{
 		}
 		
 		if(name != null && value != null){
-			RAMParameter parameter = RAMParameter.valueOf(name.toUpperCase());
-			RAM ram = (RAM) device;
-			
-			switch (parameter) {
-			case MEMORY_SIZE:
-				ram.setMemorySize(Integer.parseInt(value));
-				return true;
-			case FREQUENCY:
-				ram.setFrequency(Integer.parseInt(value));
-				return true;
-			case TYPE:
-				ram.setType(RAMType.valueOf(value.toUpperCase()));
-				return true;
-			default:
+			RAMFieldHandler handler = EnumUtils.lookup(RAMFieldHandler.class, name);
+			if (handler != null){
+				return handler.handle(device, value);
+			} else{
 				return false;
 			}
 		}
@@ -47,8 +77,8 @@ public class RAMParser extends DeviceParser{
 
 
 	@Override
-	public boolean canHandle(String type) {
-		return type.toLowerCase().equals("ram");
+	public Device getDevice() {
+		return device;
 	}
 
 	
