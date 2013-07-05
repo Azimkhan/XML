@@ -11,6 +11,8 @@
 			<xs:choice minOccurs="1" maxOccurs="unbounded">
 				<xs:element name="cpu" type="tns:CPU"></xs:element>
 				<xs:element name="ram" type="tns:RAM"></xs:element>
+				<xs:element name="storage" type="tns:InternalStorage"></xs:element>
+				<xs:element name="peripheral" type="tns:Peripheral"></xs:element>
 			</xs:choice>
 			
 			</xs:sequence>
@@ -81,6 +83,13 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="StorageType">
+	
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HDD"></xs:enumeration>
+			<xs:enumeration value="SSD"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
 	
 	<xs:complexType name="RAM">
 		<xs:complexContent>
@@ -94,15 +103,44 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
+	<xs:complexType name="InternalStorage">
+		<xs:complexContent>
+			<xs:extension base="tns:Device">
+				<xs:sequence>
+					<xs:element name="capacity" type="tns:Size" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="transfer_rate" type="tns:DataTransferRate" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="type" type="tns:StorageType" minOccurs="1" maxOccurs="1"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="Peripheral">
+		<xs:complexContent>
+			<xs:extension base="tns:Device">
+				<xs:sequence>
+					<xs:element name="group" type="tns:DeviceGroup" maxOccurs="1" minOccurs="1"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	
 	<xs:simpleType name="Size">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[1-9][0-9]*(Mb?)?"></xs:pattern>
+			<xs:pattern value="\s*(([1-9][0-9]*\s*(M[Bb])?)|([1-9][0-9]*\s*G[Bb]))\s*"></xs:pattern>
 		</xs:restriction>
 	</xs:simpleType>
 						
 	<xs:simpleType name="Frequency">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[1-9][0-9]*(\s*(Mhz|Ghz))?"></xs:pattern>
+			<xs:pattern value="\s*(([1-9][0-9]*\s*(M[Hh][Zz])?)|([1-9]\.[0-9]+\s*G[Hh][Zz]))\s*"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DataTransferRate">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\s*(([1-9][0-9]*\\s*(Mbps)?)|([1-9](\.[0-9]+)?\s*Gbps))\s*"></xs:pattern>
 		</xs:restriction>
 	</xs:simpleType>	
 </xs:schema>

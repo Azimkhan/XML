@@ -40,7 +40,7 @@ public class FieldParser {
 	*/
 	
 	public static int parseSize(String value) throws ParseException{
-		Pattern p = Pattern.compile("\\s*(((?<mb>[1-9][0-9]+)\\s*(Mb)?)|((?<gb>[1-9][0-9]+)\\s*Gb))\\s*");
+		Pattern p = Pattern.compile("\\s*(((?<mb>[1-9][0-9]*)\\s*(M[Bb])?)|((?<gb>[1-9][0-9]*)\\s*G[Bb]))\\s*");
 		Matcher m = p.matcher(value);
 		
 		if (m.matches()){
@@ -55,5 +55,22 @@ public class FieldParser {
 		}
 		throw new ParseException("Size doesn't match pattern");
 		
+	}
+	
+	public static int parseDataTransferRate(String value) throws ParseException{
+		Pattern p = Pattern.compile("\\s*(((?<mb>[1-9][0-9]*)\\s*(Mbps)?)|((?<gb>[1-9](\\.[0-9]+)*)\\s*Gbps))\\s*");
+		Matcher m = p.matcher(value);
+		
+		if (m.matches()){
+			String mb = m.group("mb");
+			String gb = m.group("gb");
+			
+			if (null != mb){
+				return Integer.parseInt(mb);
+			} else {
+				return (int) (Double.parseDouble(gb) * 1024);
+			}
+		}
+		throw new ParseException("Data transfer rate doesn't match pattern");
 	}
 }

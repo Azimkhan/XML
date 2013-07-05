@@ -14,12 +14,18 @@ public class CPUParser extends DeviceParser{
 		FREQUENCY, NUMBER_OF_CORES, NUMBER_OF_THREADS, CACHE_SIZE, SOCKET
 	}
 	
+	/**
+	 * Init parser
+	 */
 	@Override
 	public void init() {
 		this.device = new CPU();
 		
 	}
 	
+	/**
+	 * Parse filed
+	 */
 	@Override
 	public boolean parseField(String name, String value){
 		if (super.parseField(name, value)){

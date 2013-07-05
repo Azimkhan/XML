@@ -21,10 +21,6 @@ public abstract class Device {
 	private String origin;
 	
 	/**
-	 * Power consumption in watts
-	 */
-	private double powerConsumption;
-	/**
 	 * The price of device
 	 */
 	private int price;
@@ -36,13 +32,12 @@ public abstract class Device {
 	
 	public Device(){}
 	
-	public Device(String name, String manufacturer, String origin, int price, double powerConsumption, boolean critical) {
+	public Device(String name, String manufacturer, String origin, int price, boolean critical) {
 		super();
 		this.name = name;
 		this.manufacturer = manufacturer;
 		this.origin = origin;
 		this.price = price;
-		this.powerConsumption = powerConsumption;
 	}
 
 
@@ -105,14 +100,6 @@ public abstract class Device {
 	 */
 	public void setPrice(int price) {
 		this.price = price;
-	}
-
-	public double getPowerConsumption() {
-		return powerConsumption;
-	}
-
-	public void setPowerConsumption(double powerConsumption) {
-		this.powerConsumption = powerConsumption;
 	}
 
 	/**

@@ -21,9 +21,9 @@ public class PeripheralDevice extends Device{
 	}
 
 	public PeripheralDevice(String name, String manufacturer, String origin,
-			int price, double powerConsumption, boolean critical,
+			int price, boolean critical,
 			DeviceGroup deviceGroup) {
-		super(name, manufacturer, origin, price, powerConsumption, critical);
+		super(name, manufacturer, origin, price, critical);
 		this.setDeviceGroup(deviceGroup);
 	}
 

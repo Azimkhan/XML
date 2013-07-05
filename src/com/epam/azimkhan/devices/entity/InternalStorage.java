@@ -29,9 +29,9 @@ public class InternalStorage extends Device{
 	}
 
 	public InternalStorage(String name, String manufacturer, String origin,
-			int price, double powerConsumption, int capacity,
+			int price, int capacity,
 			int dataTransferRate, DiskType type, boolean critical) {
-		super(name, manufacturer, origin, price, powerConsumption, critical);
+		super(name, manufacturer, origin, price, critical);
 		this.capacity = capacity;
 		this.dataTransferRate = dataTransferRate;
 		this.type = type;

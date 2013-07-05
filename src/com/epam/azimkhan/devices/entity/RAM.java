@@ -38,9 +38,9 @@ public class RAM extends Device implements Cloneable, Serializable{
 	
 
 	public RAM(String name, String manufacturer, String origin,
-			int price, double powerConsumption, int memorySize, int frequency,
+			int price, int memorySize, int frequency,
 			RAMType type, boolean critical) {
-		super(name, manufacturer, origin, price, powerConsumption, critical);
+		super(name, manufacturer, origin, price, critical);
 		this.memorySize = memorySize;
 		this.frequency = frequency;
 		this.type = type;

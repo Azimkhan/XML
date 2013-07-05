@@ -154,6 +154,7 @@ public class DOMDeviceAnalyzer {
 			throw new ParseException(String.format("Unable to parse field with name '%s'", name));
 		}
 	}
+	
 	/**
 	 * Parse device parameter
 	 * @param parameters list of parameters to be parsed

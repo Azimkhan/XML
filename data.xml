@@ -8,7 +8,7 @@
 		<manufacturer>Transcend</manufacturer>
 		<price>11740</price>
 		<critical>true</critical>
-		<frequency>1333</frequency>
+		<frequency>1333 Mhz</frequency>
 		<memory_size>8192</memory_size>
 		<type>DDR3</type>
 
@@ -27,17 +27,26 @@
 		<cache_size>2</cache_size>
 	</cpu>
 
-
-
 	<ram>
 		<name> PC6400</name>
 		<origin>Japan</origin>
 		<manufacturer>Kingmax</manufacturer>
 		<price>11740</price>
 		<critical>true</critical>
-		<frequency>800Mhz</frequency>
+		<frequency>1000 Mhz</frequency>
 		<memory_size>2048</memory_size>
 		<type>DDR2</type>
 	</ram>
 
+	<storage>
+		<name>Some disk name</name>
+		<origin>USA</origin>    
+		<manufacturer>Transcend</manufacturer>
+		<price>8430</price>
+		<critical>true</critical>
+		<capacity>750GB</capacity>
+		<transfer_rate>1.4 Gbps</transfer_rate>
+		<type>HDD</type>
+		
+	</storage>
 </devices>
