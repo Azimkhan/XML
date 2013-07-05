@@ -10,7 +10,7 @@ public class StAXBuilder extends AbstractXMLBuilder {
 
 	@Override
 	public List<Device> build(String filename) throws BuilderException {
-		// TODO Auto-generated method stub
+		// TODO сделать
 		return null;
 	}
 

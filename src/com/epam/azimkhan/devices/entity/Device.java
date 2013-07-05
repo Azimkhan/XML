@@ -3,7 +3,7 @@ package com.epam.azimkhan.devices.entity;
 /**
  * Basic device
  */
-public abstract class Device {
+public abstract class Device{
 	
 	/**
 	 * The name, e.g. "Intel Core i3"
@@ -114,6 +114,56 @@ public abstract class Device {
 	 */
 	public void setCritical(boolean critical) {
 		this.critical = critical;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (critical ? 1231 : 1237);
+		result = prime * result
+				+ ((manufacturer == null) ? 0 : manufacturer.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((origin == null) ? 0 : origin.hashCode());
+		result = prime * result + price;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Device other = (Device) obj;
+		if (critical != other.critical)
+			return false;
+		if (manufacturer == null) {
+			if (other.manufacturer != null)
+				return false;
+		} else if (!manufacturer.equals(other.manufacturer))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (origin == null) {
+			if (other.origin != null)
+				return false;
+		} else if (!origin.equals(other.origin))
+			return false;
+		if (price != other.price)
+			return false;
+		return true;
 	}
 	
 	
