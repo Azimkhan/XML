@@ -13,19 +13,18 @@ import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.exception.ParseException;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
+import com.epam.azimkhan.devices.xml.parser.Messages;
 
 /**
  * DOM version
  */
-public class DOMDeviceAnalyzer {
+public enum DOMDeviceAnalyzer {
+	
+	INSTANCE;
 	
 	//TODO string external.
 	
 	
-	/**
-	 * Singleton instance
-	 */
-	private static DOMDeviceAnalyzer instance = null;
 	
 	/**
 	 * List of parsers
@@ -37,27 +36,9 @@ public class DOMDeviceAnalyzer {
 	 */
 	private DeviceParser currentParser;
 	
-	/**
-	 * Singleton constructor
-	 */
 	
 	public static final Logger logger = Logger.getRootLogger();
 	
-	private DOMDeviceAnalyzer(){
-		super();
-	}
-	
-	/**
-	 * Retrieve instance
-	 * @return DOM analyzer
-	 */
-	public static DOMDeviceAnalyzer getInstance(){
-		if (null == instance){
-			instance = new DOMDeviceAnalyzer();
-		}
-		
-		return instance;
-	}
 	
 	/**
 	 * Build list of devices from Document Model
@@ -71,16 +52,17 @@ public class DOMDeviceAnalyzer {
 		
 		NodeList childern = rootElement.getChildNodes();
 		
-		logger.info("Document started");
+		logger.info(Messages.getString("document_start"));
 		for (int i = 0; i < childern.getLength(); i++){
 			Node node = childern.item(i);
-			if (node.getNodeName().equals("device")){
+			if (node.getNodeType() == Node.ELEMENT_NODE){
 				currentParser = null;
 				Device device = parseDevice(node);
 				devices.add(device);
 			}
+			
 		}
-		logger.info("Reached the end of the document");
+		logger.info(Messages.getString("document_end"));
 		return devices;
 		
 	}
@@ -93,23 +75,18 @@ public class DOMDeviceAnalyzer {
 	private Device parseDevice(Node deviceNode) throws ParseException{
 		
 		NodeList children = deviceNode.getChildNodes();
-		String type = nodeAttribute(deviceNode, "type");
 		
-		findDeviceParser(type);
+		findDeviceParser(deviceNode.getNodeName());
 		
 		for (int i = 0; i < children.getLength(); i++){
 			Node element = children.item(i);
 			String name = element.getNodeName();
 			
 			if (element.getNodeType() == Node.ELEMENT_NODE){
-				if (name != "parameters"){
+				
 					
 					String value = nodeText(element);
 					parseField(name, value);
-					
-				} else{
-					parseParameters(element.getChildNodes());
-				}
 			}
 		}
 		
@@ -125,18 +102,22 @@ public class DOMDeviceAnalyzer {
 	private void findDeviceParser(String type) throws ParseException {
 
 		if (type != null) {
-			logger.info(String.format("Device[%s] found. Searching for parser...", type));
-			// loop through parsers
+			logger.info(String.format(
+					Messages.getString("device_found"), type));  //$NON-NLS-1$
+
 			currentParser = parserFactory.getParser(type);
+
 			if (currentParser != null) {
-				logger.info(String.format("Parser found: %s", currentParser.getClass().getSimpleName()));
-			} else{
+				logger.info(String.format(Messages.getString("parser_found"), currentParser  //$NON-NLS-1$
+						.getClass().getSimpleName()));
+				currentParser.init();
+			} else {
 				throw new ParseException(String.format(
-						"Unable to parse device with type '%s'", type));
+						Messages.getString("unable_to_parse_device"), type));  //$NON-NLS-1$
 			}
 		} else {
 			throw new ParseException(String.format(
-					"Attribute '%s' for device is required'", "type"));
+					Messages.getString("empty_device_name"))); //$NON-NLS-1$
 		}
 	}
 	
@@ -148,58 +129,11 @@ public class DOMDeviceAnalyzer {
 	 */
 	private void parseField(String name, String value) throws ParseException{
 		boolean result = currentParser.parseField(name, value);
-		logger.info(String.format("Parsing field name='%s', value='%s'", name, value ));
+		logger.info(String.format(Messages.getString("parsing_field"), name, value ));
 		
 		if (!result){
-			throw new ParseException(String.format("Unable to parse field with name '%s'", name));
+			throw new ParseException(String.format(Messages.getString("unable_to_parse_field"), name));
 		}
-	}
-	
-	/**
-	 * Parse device parameter
-	 * @param parameters list of parameters to be parsed
-	 * @throws ParseException
-	 */
-	private void parseParameters(NodeList parameters) throws ParseException{
-		
-		for(int i = 0; i < parameters.getLength(); i++){
-			Node parameter = parameters.item(i);
-			
-			if (parameter.getNodeType() == Node.ELEMENT_NODE){
-			String name = nodeAttribute(parameter, "name");
-			String value = nodeText(parameter);
-			
-			logger.info(String.format("Parsing parameter name='%s', value='%s'", name, value ));
-			
-			/*
-				boolean result = currentParser.parseParameter(name, value);
-				
-				if (!result){
-					throw new ParseException(String.format("Unable to parse paramter with name'%s'", name));
-				}
-				*/
-			} 
-			
-		}
-			
-	}
-	
-	/**
-	 * Get attribute value if exists
-	 * @param node
-	 * @param attributeName
-	 * @return attribute value
-	 */
-	private String nodeAttribute(Node node, String attributeName){
-		
-		Node attribute = node.getAttributes().getNamedItem(attributeName);
-		
-		if (attribute != null){
-			return attribute.getNodeValue();
-		}
-		
-		return null;
-		
 	}
 	
 	/**

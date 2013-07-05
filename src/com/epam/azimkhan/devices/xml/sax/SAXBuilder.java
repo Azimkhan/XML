@@ -16,12 +16,7 @@ import com.epam.azimkhan.devices.xml.exception.BuilderException;
  * SAX device builder
  */
 public class SAXBuilder extends AbstractXMLBuilder {
-	static final String JAXP_SCHEMA_LANGUAGE =
-	        "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-	    
-	    static final String W3C_XML_SCHEMA =
-	        "http://www.w3.org/2001/XMLSchema";
-	    
+	
 	@Override
 	public List<Device> build(String filename) throws BuilderException {
 		
