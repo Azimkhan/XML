@@ -1,16 +1,5 @@
 package com.epam.azimkhan.devices.xml.parser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-import java.util.StringTokenizer;
-
-import org.apache.log4j.Logger;
 
 /**
  * Device parser factory
@@ -30,17 +19,15 @@ public class DeviceParserFactory {
 			public DeviceParser getParser() {
 				return new RAMParser();
 			}
-		}, INTERNAL_STORAGE {
+		}, STORAGE {
 			@Override
 			public DeviceParser getParser() {
-				// TODO Auto-generated method stub
-				return null;
+				return new InternalStorageParser();
 			}
 		}, PERIPHERAL {
 			@Override
 			public DeviceParser getParser() {
-				// TODO
-				return null;
+				return new PeripheralParser();
 			}
 		};
 		
@@ -48,7 +35,11 @@ public class DeviceParserFactory {
 		
 	}
 	
-	
+	/**
+	 * Check if device is supported
+	 * @param name
+	 * @return
+	 */
 	public boolean hasDevice(String name){
 		
 		if (name != null){
@@ -60,6 +51,11 @@ public class DeviceParserFactory {
 		return false;
 	}
 	
+	/**
+	 * Get device parser
+	 * @param name
+	 * @return
+	 */
 	public DeviceParser getParser(String name){
 		if (hasDevice(name)){
 			return Parser.valueOf(name.toUpperCase()).getParser();

@@ -1,7 +1,5 @@
 <?xml version="1.1" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.example.org/schema" xmlns:tns="http://www.example.org/schema"
-	elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
 
 	<xs:element name="devices">
@@ -9,10 +7,10 @@
         <xs:complexType>
 			<xs:sequence>
 			<xs:choice minOccurs="1" maxOccurs="unbounded">
-				<xs:element name="cpu" type="tns:CPU"></xs:element>
-				<xs:element name="ram" type="tns:RAM"></xs:element>
-				<xs:element name="storage" type="tns:InternalStorage"></xs:element>
-				<xs:element name="peripheral" type="tns:Peripheral"></xs:element>
+				<xs:element name="cpu" type="CPU"></xs:element>
+				<xs:element name="ram" type="RAM"></xs:element>
+				<xs:element name="storage" type="InternalStorage"></xs:element>
+				<xs:element name="peripheral" type="Peripheral"></xs:element>
 			</xs:choice>
 			
 			</xs:sequence>
@@ -33,8 +31,6 @@
 			</xs:element>
 			<xs:element name="critical" type="xs:boolean" minOccurs="1" maxOccurs="1">
 			</xs:element>
-			<xs:element name="group" type="tns:DeviceGroup" minOccurs="0" maxOccurs="1">
-			</xs:element>
 		</xs:sequence>
 
 		
@@ -53,9 +49,9 @@
 
 	<xs:complexType name="CPU">
 		<xs:complexContent>
-			<xs:extension base="tns:Device">
+			<xs:extension base="Device">
 					<xs:sequence>
-						<xs:element name="frequency" type="tns:Frequency"/>
+						<xs:element name="frequency" type="Frequency"/>
 						<xs:element name="number_of_cores" type="xs:int"/>
 						<xs:element name="number_of_threads" type="xs:int"/>
 						<xs:element name="socket">
@@ -68,7 +64,7 @@
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
-						<xs:element name="cache_size" type="tns:Size"/>
+						<xs:element name="cache_size" type="Size"/>
 					</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -93,11 +89,11 @@
 	
 	<xs:complexType name="RAM">
 		<xs:complexContent>
-			<xs:extension base="tns:Device">
+			<xs:extension base="Device">
 				<xs:sequence>
-					<xs:element name="frequency" type="tns:Frequency" maxOccurs="1" minOccurs="1"></xs:element>
-					<xs:element name="memory_size" type="tns:Size" maxOccurs="1" minOccurs="1"></xs:element>
-					<xs:element name="type" type="tns:RAMType" minOccurs="1" maxOccurs="1"></xs:element>
+					<xs:element name="frequency" type="Frequency" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="memory_size" type="Size" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="type" type="RAMType" minOccurs="1" maxOccurs="1"></xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -105,11 +101,11 @@
 	
 	<xs:complexType name="InternalStorage">
 		<xs:complexContent>
-			<xs:extension base="tns:Device">
+			<xs:extension base="Device">
 				<xs:sequence>
-					<xs:element name="capacity" type="tns:Size" maxOccurs="1" minOccurs="1"></xs:element>
-					<xs:element name="transfer_rate" type="tns:DataTransferRate" maxOccurs="1" minOccurs="1"></xs:element>
-					<xs:element name="type" type="tns:StorageType" minOccurs="1" maxOccurs="1"></xs:element>
+					<xs:element name="capacity" type="Size" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="transfer_rate" type="DataTransferRate" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="type" type="StorageType" minOccurs="1" maxOccurs="1"></xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -117,9 +113,9 @@
 	
 	<xs:complexType name="Peripheral">
 		<xs:complexContent>
-			<xs:extension base="tns:Device">
+			<xs:extension base="Device">
 				<xs:sequence>
-					<xs:element name="group" type="tns:DeviceGroup" maxOccurs="1" minOccurs="1"></xs:element>
+					<xs:element name="group" type="DeviceGroup" maxOccurs="1" minOccurs="1"></xs:element>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>

@@ -6,11 +6,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.epam.azimkhan.devices.entity.Device;
+import com.epam.azimkhan.devices.xml.builder.BuilderProperties;
 import com.epam.azimkhan.devices.xml.parser.DeviceParser;
 import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
+import com.epam.azimkhan.devices.xml.parser.Messages;
 
 /**
  * "Simple API for XML Processing" handler
@@ -43,15 +46,28 @@ public class SAXDeviceHandler extends DefaultHandler {
 	public SAXDeviceHandler() {
 		super();
 	}
-
+	/**
+	 * Error handling
+	 */
+	@Override
+	public void error(SAXParseException e) throws SAXException {
+		throw e;
+	}
+	
+	/**
+	 * Document start
+	 */
 	@Override
 	public void startDocument() throws SAXException {
-		logger.info("Document started");
+		logger.info(Messages.getString("document_start"));  //$NON-NLS-1$
 	}
-
+	
+	/**
+	 * Document end
+	 */
 	@Override
 	public void endDocument() throws SAXException {
-		logger.info("Reached the end of the document");
+		logger.info(Messages.getString("document_end"));  //$NON-NLS-1$
 	}
 
 	/**
@@ -61,7 +77,7 @@ public class SAXDeviceHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 
-		if (!localName.equals("devices")) {
+		if (!localName.equals(BuilderProperties.getString("root_element"))) { //$NON-NLS-1$
 			if (currentParser == null) {
 				findDeviceParser(localName);
 			} else {
@@ -77,7 +93,7 @@ public class SAXDeviceHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		
-		if (!localName.equals("devices")){
+		if (!localName.equals(BuilderProperties.getString("root_element"))) { //$NON-NLS-1$
 			if (parserFactory.hasDevice(localName)) {
 				devices.add(currentParser.getDevice());
 				currentParser = null;
@@ -96,13 +112,13 @@ public class SAXDeviceHandler extends DefaultHandler {
 		String value = new String(ch, start, length).trim();
 
 		if (lastFieldName != null) {
-			logger.info(String.format("Parsing field name='%s', value='%s'",
+			logger.info(String.format(Messages.getString("parsing_field"),  //$NON-NLS-1$
 					lastFieldName, value));
 			if (currentParser.parseField(lastFieldName, value)) {
 				lastFieldName = null;
 			} else {
 				throw new SAXException(String.format(
-						"Unable to parse field with name '%s'", lastFieldName));
+						Messages.getString("unable_to_parse_field"), lastFieldName));  //$NON-NLS-1$
 			}
 		}
 	}
@@ -117,27 +133,26 @@ public class SAXDeviceHandler extends DefaultHandler {
 
 		if (type != null) {
 			logger.info(String.format(
-					"Device[%s] found. Searching for parser...", type));
+					Messages.getString("device_found"), type));  //$NON-NLS-1$
 
 			currentParser = parserFactory.getParser(type);
 
 			if (currentParser != null) {
-				logger.info(String.format("Parser found: %s", currentParser
+				logger.info(String.format(Messages.getString("parser_found"), currentParser  //$NON-NLS-1$
 						.getClass().getSimpleName()));
 				currentParser.init();
 			} else {
 				throw new SAXException(String.format(
-						"Unable to parse device with type '%s'", type));
+						Messages.getString("unable_to_parse_device"), type));  //$NON-NLS-1$
 			}
 		} else {
 			throw new SAXException(String.format(
-					"Attribute '%s' for device is required'", "type"));
+					Messages.getString("empty_device_name"))); //$NON-NLS-1$
 		}
 	}
 
 	/**
 	 * return parsed devices
-	 * 
 	 * @return
 	 */
 	public List<Device> getDevices() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<devices xmlns="http://www.example.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/schema ./schema.xsd">
+<devices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="schema.xsd">
 	<ram>
 		<name>PC10600</name>
 		<origin>USA</origin>
@@ -49,4 +49,14 @@
 		<type>HDD</type>
 		
 	</storage>
+	
+	<peripheral>
+	    <name>Officejet 7110WF</name>
+	    <origin>USA</origin>
+	    <manufacturer>HP</manufacturer>
+	    <price>35626</price>
+	    <critical>false</critical>
+	    <group>Output</group>
+	</peripheral>
+	
 </devices>

@@ -1,25 +1,29 @@
 package com.epam.azimkhan.devices.entity;
 
-import java.util.HashMap;
 
 
 /**
  * Peripheral device
  */
 public class PeripheralDevice extends Device{
+	/**
+	 * Device groups
+	 *
+	 */
 	public enum DeviceGroup{
 		MULTIMEDIA, INPUT, OUTPUT, STORAGE
 	}
 	
+	/**
+	 * Device group
+	 */
 	private DeviceGroup deviceGroup;
-	
-	private HashMap<String, String> parameters = new HashMap<String, String>();
-
 	
 	public PeripheralDevice() {
 		super();
 	}
 
+	
 	public PeripheralDevice(String name, String manufacturer, String origin,
 			int price, boolean critical,
 			DeviceGroup deviceGroup) {
@@ -28,28 +32,17 @@ public class PeripheralDevice extends Device{
 	}
 
 	/**
-	 * @param key
-	 * @param value
-	 * @return 
-	 * @see java.util.HashMap#put(java.lang.Object, java.lang.Object)
+	 * get device group
+	 * @return
 	 */
-	public String setParameter(String key, String value) {
-		return parameters.put(key, value);
-	}
-
-	/**
-	 * @param key
-	 * @return String
-	 * @see java.util.HashMap#get(java.lang.Object)
-	 */
-	public String getParameter(String key) {
-		return parameters.get(key);
-	}
-
 	public DeviceGroup getDeviceGroup() {
 		return deviceGroup;
 	}
 
+	/**
+	 * set device group
+	 * @param deviceGroup
+	 */
 	public void setDeviceGroup(DeviceGroup deviceGroup) {
 		this.deviceGroup = deviceGroup;
 	}

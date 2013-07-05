@@ -5,31 +5,32 @@ import com.epam.azimkhan.devices.xml.exception.BuilderException;
 import com.epam.azimkhan.devices.xml.sax.SAXBuilder;
 import com.epam.azimkhan.devices.xml.stax.StAXBuilder;
 
-public class DeviceBuilderFactory {
+public class DeviceXMLBuilderFactory {
 	
 	private static BuilderEnum preferedBuilder = BuilderEnum.SAX;
+	
 	
 	enum BuilderEnum{
 		DOM {
 			@Override
-			public AbstractBuilder createBuilder() {
+			public AbstractXMLBuilder createBuilder() {
 				return new DOMBuilder();
 			}
 		}, 
 		SAX {
 			@Override
-			public AbstractBuilder createBuilder() {
+			public AbstractXMLBuilder createBuilder() {
 				return new SAXBuilder();
 			}
 		}, 
 		STAX {
 			@Override
-			public AbstractBuilder createBuilder() {
+			public AbstractXMLBuilder createBuilder() {
 				return new StAXBuilder();
 			}
 		};
 		
-		public abstract AbstractBuilder createBuilder();	
+		public abstract AbstractXMLBuilder createBuilder();	
 		
 	}
 	
@@ -39,7 +40,7 @@ public class DeviceBuilderFactory {
 	 * @return builder
 	 * @throws BuilderException
 	 */
-	public AbstractBuilder createBuilder(String name) throws BuilderException{
+	public AbstractXMLBuilder createBuilder(String name) throws BuilderException{
 		if (name != null){
 			for (BuilderEnum b :BuilderEnum.values()){
 				if (b.name().equals(name.toUpperCase())){
@@ -56,7 +57,7 @@ public class DeviceBuilderFactory {
 	 * Get default builder
 	 * @return default builder
 	 */
-	public AbstractBuilder createBuilder(){
+	public AbstractXMLBuilder createBuilder(){
 		return preferedBuilder.createBuilder();
 	}
 	
