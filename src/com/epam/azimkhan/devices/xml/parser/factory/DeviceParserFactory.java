@@ -1,4 +1,10 @@
-package com.epam.azimkhan.devices.xml.parser;
+package com.epam.azimkhan.devices.xml.parser.factory;
+
+import com.epam.azimkhan.devices.xml.parser.component.CPUParser;
+import com.epam.azimkhan.devices.xml.parser.component.DeviceParser;
+import com.epam.azimkhan.devices.xml.parser.component.InternalStorageParser;
+import com.epam.azimkhan.devices.xml.parser.component.PeripheralParser;
+import com.epam.azimkhan.devices.xml.parser.component.RAMParser;
 
 
 /**

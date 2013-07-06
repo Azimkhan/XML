@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.parser;
+package com.epam.azimkhan.devices.xml.parser.util;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

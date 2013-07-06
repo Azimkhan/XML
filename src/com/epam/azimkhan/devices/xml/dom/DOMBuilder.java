@@ -1,6 +1,7 @@
 package com.epam.azimkhan.devices.xml.dom;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -18,7 +19,7 @@ import com.epam.azimkhan.devices.xml.exception.ParseException;
 public class DOMBuilder extends AbstractXMLBuilder {
 
 	@Override
-	public List<Device> build(String filename) throws BuilderException {
+	protected List<Device> build(InputStream instream) throws BuilderException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(true);
 		factory.setNamespaceAware(true);
@@ -29,14 +30,13 @@ public class DOMBuilder extends AbstractXMLBuilder {
 
 			builder.setErrorHandler(new DOMErrorHandler());
 
-			Document document = builder.parse(filename);
+			Document document = builder.parse(instream);
 
 			DOMDeviceAnalyzer analyzer = DOMDeviceAnalyzer.INSTANCE;
 
 			return analyzer.buildList(document.getDocumentElement());
 
 		} catch (ParseException e) {
-			e.printStackTrace();
 			throw new BuilderException(e.getMessage(), e.getCause());
 		} catch (ParserConfigurationException e) {
 			throw new BuilderException(e.getMessage(), e.getCause());

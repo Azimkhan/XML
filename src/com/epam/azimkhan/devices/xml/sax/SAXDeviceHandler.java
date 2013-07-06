@@ -11,9 +11,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.builder.BuilderProperties;
-import com.epam.azimkhan.devices.xml.parser.DeviceParser;
-import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
-import com.epam.azimkhan.devices.xml.parser.Messages;
+import com.epam.azimkhan.devices.xml.parser.component.DeviceParser;
+import com.epam.azimkhan.devices.xml.parser.factory.DeviceParserFactory;
+import com.epam.azimkhan.devices.xml.parser.util.Messages;
 
 /**
  * "Simple API for XML Processing" handler

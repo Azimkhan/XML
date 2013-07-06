@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.parser;
+package com.epam.azimkhan.devices.xml.parser.component;
 
 import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.util.EnumUtils;

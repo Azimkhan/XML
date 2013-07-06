@@ -1,4 +1,4 @@
-package com.epam.azimkhan.devices.xml.parser;
+package com.epam.azimkhan.devices.xml.parser.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

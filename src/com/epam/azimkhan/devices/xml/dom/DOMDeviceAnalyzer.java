@@ -11,9 +11,9 @@ import org.xml.sax.SAXException;
 
 import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.exception.ParseException;
-import com.epam.azimkhan.devices.xml.parser.DeviceParser;
-import com.epam.azimkhan.devices.xml.parser.DeviceParserFactory;
-import com.epam.azimkhan.devices.xml.parser.Messages;
+import com.epam.azimkhan.devices.xml.parser.component.DeviceParser;
+import com.epam.azimkhan.devices.xml.parser.factory.DeviceParserFactory;
+import com.epam.azimkhan.devices.xml.parser.util.Messages;
 
 /**
  * DOM version

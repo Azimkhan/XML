@@ -8,7 +8,7 @@ import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.xml.builder.AbstractXMLBuilder;
 import com.epam.azimkhan.devices.xml.builder.DeviceXMLBuilderFactory;
 import com.epam.azimkhan.devices.xml.exception.BuilderException;
-import com.epam.azimkhan.devices.xml.parser.Messages;
+import com.epam.azimkhan.devices.xml.parser.util.Messages;
 
 public class Runner {
 
@@ -23,7 +23,7 @@ public class Runner {
 			
 			AbstractXMLBuilder builder = factory.createBuilder("sax");
 			logger.info(String.format(Messages.getString("using_builder"), builder.getClass().getSimpleName()));
-			List<Device> devices = builder.build(filename);
+			List<Device> devices = builder.buildList(filename);
 			System.out.println(devices);
 		} catch (BuilderException e) {
 			logger.error(e.getMessage());

@@ -1,10 +1,11 @@
-package com.epam.azimkhan.devices.xml.parser;
+package com.epam.azimkhan.devices.xml.parser.component;
 
 import com.epam.azimkhan.devices.entity.Device;
 import com.epam.azimkhan.devices.entity.RAM;
 import com.epam.azimkhan.devices.entity.RAM.RAMType;
 import com.epam.azimkhan.devices.util.EnumUtils;
 import com.epam.azimkhan.devices.xml.parser.exception.ParseException;
+import com.epam.azimkhan.devices.xml.parser.util.FieldParser;
 
 public class RAMParser extends DeviceParser{
 
